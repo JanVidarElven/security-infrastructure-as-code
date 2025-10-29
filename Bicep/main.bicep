@@ -34,7 +34,7 @@ var defaultTags = {
 @description('Tenant ID where the Workload Identity Federation (WIF) is created.')
 param tenantId string = deployer().tenantId // Defaults to the tenant of the deployer, or override
 @description('Subject of the GitHub Actions workflow\'s federated identity credentials (FIC) that is checked before issuing an Entra ID access token to access Azure resources. GitHub Actions subject examples can be found in https://docs.github.com/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims')
-param githubActionsFicSubject string = 'repo:JanVidarElven/security-infrastructure-as-code:ref:refs/heads/main'
+param githubActionsFicSubject string = 'repo:JanVidarElven/security-infrastructure-as-code:environment:production' // if by branch 'repo:JanVidarElven/security-infrastructure-as-code:ref:refs/heads/main'
 @description('This federation subject identifier is automatically created for this Service connection. Azure DevOps guarantees only this service connection will use that identity globally.')
 param adoServiceConnectionFicSubject string = '<Unique Service Connection Identifier from Azure DevOps Service Connection>'
 
