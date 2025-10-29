@@ -42,17 +42,17 @@
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-name: 'Terraform for AzureRM-AzureAD'
+name: 'Terraform for AzureRM-MsGraph'
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-      - 'Terraform-AzureAd/**'
+      - 'Terraform-MsGraph/**'
   pull_request:
     paths:
-      - 'Terraform-AzureAd/**'
+      - 'Terraform-MsGraph/**'
 
 permissions:
   contents: read
