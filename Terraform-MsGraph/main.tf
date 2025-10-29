@@ -86,14 +86,14 @@ variable "appRoles" {
 }
 
 locals {
-  appRoles = toset(var.appRoles)
+  appRoles   = toset(var.appRoles)
   appRoleIds = { for role in data.msgraph_resource.servicePrincipal_msgraph.output.all.value[0].appRoles : role.value => role.id }
 }
 
 // Looping through the App Roles and assigning them to the Managed Identity
 resource "msgraph_resource" "appRoleAssignment" {
   for_each = local.appRoles
-  url = "servicePrincipals/${data.msgraph_resource.servicePrincipal_msgraph.output.all.value[0].id}/appRoleAssignments"
+  url      = "servicePrincipals/${data.msgraph_resource.servicePrincipal_msgraph.output.all.value[0].id}/appRoleAssignments"
   body = {
     appRoleId   = local.appRoleIds[each.value]
     principalId = data.msgraph_resource.servicePrincipal_userAssignedIdentity.output.all.value[0].id

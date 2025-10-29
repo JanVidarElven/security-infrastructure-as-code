@@ -9,9 +9,16 @@ terraform {
       source  = "microsoft/msgraph"
       version = "~> 0.2"
     }
+    azuredevops = {
+      source  = "microsoft/azuredevops"
+      version = "~> 1.11"
+    }
   }
 }
 
+locals {
+  ado_orgname = "TheGotoGuy"
+}
 variable "subscription_id" {
   sensitive = true
 }
@@ -30,4 +37,16 @@ provider "azurerm" {
 
 provider "msgraph" {
   tenant_id = var.tenant_id
+}
+
+variable "devops_entra_token" {
+  sensitive   = true
+  description = "Microsoft Entra token to access Azure DevOps"
+}
+# $env:TF_VAR_devops_entra_token = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query "accessToken" -o tsv
+
+provider "azuredevops" {
+  org_service_url = "https://dev.azure.com/${local.ado_orgname}"
+
+  personal_access_token = var.devops_entra_token
 }
