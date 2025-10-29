@@ -56,6 +56,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   terraform:
@@ -92,6 +93,13 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
+    - name: 'Az CLI login'
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.CLIENT_ID }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
