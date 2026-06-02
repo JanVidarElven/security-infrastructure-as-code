@@ -15,7 +15,7 @@ az account set --subscription "<your-azure-subscription-id-or-name>"
 ## Azure Subscription Deployment
 
 ```azurecli
-az deployment sub create --name 'deploy-elven-nic-rebel-edition-2025' --location norwayeast --template-file main.bicep
+az deployment sub create --name 'deploy-elven-experts-live-nl-2026' --location norwayeast --template-file main.bicep
 ```
 
 ## Azure Deployment Stack (NOT SUPPORTED WITH BICEP GRAPH EXTENSIONS)
@@ -23,7 +23,7 @@ az deployment sub create --name 'deploy-elven-nic-rebel-edition-2025' --location
 If and when Graph and Bicep Extensions will support Deployment Stacks, we will be using Azure and Deployment Stack using Bicep.
 
 ```azurecli
-az stack sub create --location NorwayEast --name "stack-elven-nic-rebel-edition-2025" --template-file .\main.bicep --deny-settings-mode none --action-on-unmanage deleteResources
+az stack sub create --location NorwayEast --name "stack-elven-experts-live-nl-2026" --template-file .\main.bicep --deny-settings-mode none --action-on-unmanage deleteResources
 
-az stack sub create --location NorwayEast --name "stack-elven-nic-rebel-edition-2025" --template-file .\main.bicep --parameters SOMEOPTIONALPARAMETER=false --deny-settings-mode none --action-on-unmanage deleteResources
+az stack sub create --location NorwayEast --name "stack-elven-experts-live-nl-2026" --template-file .\main.bicep --parameters SOMEOPTIONALPARAMETER=false --deny-settings-mode none --action-on-unmanage deleteResources
 ```

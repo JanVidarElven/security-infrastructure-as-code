@@ -3,7 +3,7 @@ terraform {
   backend "remote" {
     organization = "elven" # org name
     workspaces {
-      name = "nic-rebel-2025-graph" # name for app's state
+      name = "experts-live-nl-2026-graph" # name for app's state
     }
   }
 }

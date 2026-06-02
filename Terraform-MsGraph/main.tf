@@ -1,7 +1,7 @@
 // Main Input Variabules for Deployment
 // TODO: Change these to match your environment
 variable "environment" { default = "Dev" }
-variable "applicationName" { default = "NIC Rebel Edition 2025" }
+variable "applicationName" { default = "Experts Live NL 2026" }
 variable "customerName" { default = "Elven" }
 variable "location" { default = "Norway East" }
 variable "deploymentType" { default = "TerraformGraph" }

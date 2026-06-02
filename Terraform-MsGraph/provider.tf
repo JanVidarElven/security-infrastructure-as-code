@@ -7,7 +7,7 @@ terraform {
     }
     msgraph = {
       source  = "microsoft/msgraph"
-      version = "~> 0.2"
+      version = "~> 0.3.0"
     }
     azuredevops = {
       source  = "microsoft/azuredevops"

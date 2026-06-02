@@ -1,15 +1,15 @@
 
 // Main Bicep deployment file for Azure and Graph resources
-// Topic: NIC Rebel Edition 2025
+// Topic: Experts Live Netherlands 2026 - Security Infrastructure as Code with Bicep and AVM
 // Created by: Jan Vidar Elven
-// Last Updated: 28.10.2025
+// Last Updated: 01.06.2026
 
 targetScope = 'subscription'
 
 // Main Parameters for Deployment
 // TODO: Change these to match your environment
 param environment string = 'Dev'
-param applicationName string = 'NIC Rebel Edition 2025'
+param applicationName string = 'Experts Live NL 2026'
 param customerName string = 'Elven'
 param location string = 'norwayeast'
 param deploymentType string = 'Bicep'
