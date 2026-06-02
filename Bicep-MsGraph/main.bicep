@@ -29,18 +29,6 @@ var defaultTags = {
   Business: customerName
 }
 
-// Parameters for Workload Identity Federation (WIF)
-// TODO: Change these for your environment
-@description('Tenant ID where the Workload Identity Federation (WIF) is created.')
-param tenantId string = deployer().tenantId // Defaults to the tenant of the deployer, or override
-@description('Subject of the GitHub Actions workflow\'s federated identity credentials (FIC) that is checked before issuing an Entra ID access token to access Azure resources. GitHub Actions subject examples can be found in https://docs.github.com/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims')
-param githubActionsFicSubject string = 'repo:JanVidarElven/security-infrastructure-as-code:environment:production' // if by branch 'repo:JanVidarElven/security-infrastructure-as-code:ref:refs/heads/main'
-@description('This federation subject identifier is automatically created for this Service connection. Azure DevOps guarantees only this service connection will use that identity globally.')
-param adoServiceConnectionFicSubject string = '<Unique Service Connection Identifier from Azure DevOps Service Connection>'
-
-// Build the issuer URL for Azure DevOps Service Connection FIC
-var adoServiceConnectionFicIssuer string = 'https://login.microsoftonline.com/${tenantId}/v2.0'
-
 // Resource Group for the deployment
 resource rg 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: resourceGroupName
@@ -141,37 +129,13 @@ module logicApp 'br/public:avm/res/logic/workflow:0.4.0' = {
   }
 }
 
-// Creating Workload Identity Federation for GitHub Actions and Azure DevOps Pipelines
+// Assign Role Assignment for existing Workload Identity Federation for GitHub Actions and Azure DevOps Pipelines
 @description('Role definition ID to be assigned')
 param roleDefinitionId string = 'b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor
 
-var githubOIDCProvider = 'https://token.actions.githubusercontent.com'
-var microsoftEntraAudience = 'api://AzureADTokenExchange'
-
-resource federatedCredsApp 'Microsoft.Graph/applications@v1.0' = {
-  uniqueName: 'federatedCredsApp'
-  displayName: 'WI-${customerName}-${applicationName}-Federated Credentials App-${deploymentType}'
-
-  resource githubFic 'federatedIdentityCredentials' = {
-    name: '${federatedCredsApp.uniqueName}/githubFic'
-    audiences: [microsoftEntraAudience]
-    description: 'FIC for Github Actions to access Entra protected resources'
-    issuer: githubOIDCProvider
-    subject: githubActionsFicSubject
-  }
-  resource adoFic 'federatedIdentityCredentials' = {
-    name: '${federatedCredsApp.uniqueName}/adoFic'
-    audiences: [microsoftEntraAudience]
-    description: 'FIC for Azure DevOps Pipelines to access Entra protected resources'
-    issuer: adoServiceConnectionFicIssuer
-    subject: adoServiceConnectionFicSubject
-  }
-
-}
-
 // Creating a Service Principal for the Application to be assigned roles and access to Entra ID and Azure
-resource federatedCredsAppSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
-  appId: federatedCredsApp.appId
+resource federatedCredsAppSp 'Microsoft.Graph/servicePrincipals@v1.0' existing = {
+  appId: '68e99d65-cb2b-4833-9f15-a5e3aab34f04'
 }
 
 // The service principal needs to be assigned the necessary role to access the resources
